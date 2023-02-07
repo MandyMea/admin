@@ -1,13 +1,9 @@
 <template>
-    
+  <div>登录</div>
 </template>
 
 <script lang="ts">
-    export default {
-        
-    }
+  export default {};
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>
