@@ -25,7 +25,7 @@
             </a-input-password>
           </a-form-item>
           <a-form-item>
-            <a-button type="primary" @click="handleLogin"> 登 录 </a-button>
+            <a-button type="primary" :loading="loading" @click="handleLogin"> 登 录 </a-button>
           </a-form-item>
         </a-form>
       </div>
@@ -34,6 +34,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { message } from 'ant-design-vue';
   import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
   import { useRoute, useRouter } from 'vue-router';
   import { reactive } from 'vue';
@@ -49,6 +50,7 @@
   });
   const router = useRouter();
   const route = useRoute();
+  const loading = ref(false);
 
   const getFormRules = {
     username: { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -59,12 +61,13 @@
     formRef.value
       .validate()
       .then(() => {
+        message.success('登录成功');
         const toPath = decodeURIComponent((route.query?.redirect || '/') as string);
         if (route.name === 'Login') {
           router.replace('/');
         } else router.replace(toPath);
       })
-      .catch((e: any) => {
+      .catch((e: unknown) => {
         console.log('e', e);
       });
   };
